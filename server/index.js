@@ -14,8 +14,15 @@ dotenv.config();
 
 const app = express();
 
+const allowedOrigins = process.env.ALLOWED_ORIGINS;
 app.use(cors({
-  origin: 'https://66900e4a521c870d908b6444--guileless-otter-82d908.netlify.app/',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ["GET", "POST"]
 }));
 
@@ -27,7 +34,13 @@ app.use('/uploads', express.static(path.join('uploads')));
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'https://668edc57330b7a410a1576ed--guileless-otter-82d908.netlify.app/',
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ["GET", "POST"]
   }
 });
