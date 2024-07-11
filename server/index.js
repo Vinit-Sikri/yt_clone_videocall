@@ -15,7 +15,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: 'https://668edc57330b7a410a1576ed--guileless-otter-82d908.netlify.app/',
+  origin: 'https://66900e4a521c870d908b6444--guileless-otter-82d908.netlify.app/',
   methods: ["GET", "POST"]
 }));
 
