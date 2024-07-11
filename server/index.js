@@ -14,7 +14,11 @@ dontenv.config()
 
 
 const app=express()
-app.use(cors())
+app.use(cors({
+  origin: 'https://668edc57330b7a410a1576ed--guileless-otter-82d908.netlify.app/',
+  methods: ["GET", "POST"]
+}));
+
 app.use(express.json({limit:"30mb",extended:true}))
 app.use(express.urlencoded({limit:"30mb",extended:true}))
 app.use('/uploads',express.static(path.join('uploads')))
@@ -24,7 +28,8 @@ app.use('/uploads',express.static(path.join('uploads')))
 const server = http.createServer(app)
 const io =new Server(server, {
 	cors: {
-		origin: "http://localhost:3000",
+		origin:'https://668edc57330b7a410a1576ed--guileless-otter-82d908.netlify.app/',
+		//origin: "http://localhost:3000",
 		methods: [ "GET", "POST" ]
 	}
 })
