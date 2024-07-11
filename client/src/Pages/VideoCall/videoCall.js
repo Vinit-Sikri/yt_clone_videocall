@@ -11,7 +11,9 @@ import ScreenShareIcon from "@material-ui/icons/ScreenShare";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import "./videoCall.css";
 
-const socket = io.connect("http://localhost:5000");
+//const socket = io.connect("http://localhost:5000");
+const socket = io.connect("https://youtube-clone-53sz.onrender.com");
+
 
 function Videocall() {
   const [me, setMe] = useState("");
