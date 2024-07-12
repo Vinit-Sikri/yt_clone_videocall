@@ -4,20 +4,14 @@ import moment from 'moment';
 import './ShowVideo.css';
 
 function ShowVideo({ vid }) {
-  console.log('Video object:', vid); // Log the entire video object for inspection
-  console.log('Video filePath:', vid.filePath); // Log just the filePath to check its value
 
-  // Replace backslashes with forward slashes
   let normalizedFilePath = vid.filePath.replace(/\\/g, '/');
-  
-  // Ensure the normalizedFilePath starts with a slash
+
   if (!normalizedFilePath.startsWith('/')) {
     normalizedFilePath = '/' + normalizedFilePath;
   }
-  
-  // Construct the video URL
+
   const videoURL = `https://youtube-clone-53sz.onrender.com${normalizedFilePath}`;
-  console.log('Constructed Video URL:', videoURL); // Log the constructed video URL
 
   return (
     <>
