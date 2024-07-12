@@ -1,0 +1,14 @@
+services:
+  express-server:
+    type: web
+    port: 5500
+    command: nodemon index.js
+    environment:
+      - PORT=5500
+
+  video-call-server:
+    type: web
+    port: 5000
+    command: nodemon index.js
+    environment:
+      - PORT=5000
