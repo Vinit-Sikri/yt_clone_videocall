@@ -50,7 +50,7 @@ function Navbar({ toggleDrawer, setEditCreateChanelBtn }) {
     const checkCallAvailability = () => {
       const now = new Date();
       const hours = now.getHours();
-      setIsCallAllowed(hours >= 18 || hours <0);
+      setIsCallAllowed(hours >= 18 || hours <18);
     };
 
     checkCallAvailability();
