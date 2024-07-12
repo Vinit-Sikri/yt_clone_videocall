@@ -14,20 +14,25 @@ dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
+
+// Update the CORS origin to your frontend URL
 const io = new Server(server, {
   cors: {
-    origin: "https://66901091e471f911613fb5d0--guileless-otter-82d908.netlify.app",
-    methods: ["GET", "POST"]
-  }
+    origin: "https://6690e70b521c87f6288b716f--guileless-otter-82d908.netlify.app",
+    methods: ["GET", "POST"],
+  },
 });
 
+// Middleware setup
 app.use(cors());
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(bodyParser.json());
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
+// Socket.io setup
 io.on("connection", (socket) => {
+  console.log('New client connected:', socket.id);
   socket.emit("me", socket.id);
 
   socket.on("disconnect", () => {
@@ -43,16 +48,17 @@ io.on("connection", (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 3000;
-const DB_URL = process.env.CONNECTION_URL;
-
+// Define API routes
 app.get('/', (req, res) => {
   res.send("hello");
 });
-
 app.use('/user', userRoutes);
 app.use('/video', videoRoutes);
 app.use('/comment', commentsRoutes);
+
+// Connect to MongoDB and start the server
+const PORT = process.env.PORT || 3000;
+const DB_URL = process.env.CONNECTION_URL;
 
 mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
@@ -65,4 +71,6 @@ mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     console.log(error);
   });
 
-server.listen(5000, () => console.log("Video call server is running on port 5000"));
+// Start the Socket.io server on the appropriate port
+const SOCKET_IO_PORT = 5000;
+server.listen(SOCKET_IO_PORT, () => console.log(`Video call server is running on port ${SOCKET_IO_PORT}`));
